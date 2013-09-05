@@ -6,7 +6,7 @@ def _fd_or_path_or_tempfile(fd, mode='w+b', tempfile=True):
     if fd is None and tempfile:
         fd = TemporaryFile(mode=mode)
 
-    if isinstance(fd, basestring):
+    if isinstance(fd, str):
         fd = open(fd, mode=mode)
 
     return fd
