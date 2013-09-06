@@ -1,7 +1,7 @@
 import os
 import subprocess
 from tempfile import TemporaryFile, NamedTemporaryFile
-from StringIO import StringIO
+from io import BytesIO
 import wave
 import audioop
 
@@ -31,13 +31,13 @@ class AudioSegment(object):
         if kwargs.get('metadata', False):
             # internal use only
             self._data = data
-            for attr, val in kwargs.pop('metadata').items():
+            for attr, val in list(kwargs.pop('metadata').items()):
                 setattr(self, attr, val)
         else:
             # normal construction
-            data = data if isinstance(data, basestring) else data.read()
+            data = data if isinstance(data, str) else data.read()
 
-            raw = wave.open(StringIO(data), 'rb')
+            raw = wave.open(BytesIO(data), 'rb')
 
             raw.rewind()
             self.channels = raw.getnchannels()
@@ -64,7 +64,7 @@ class AudioSegment(object):
         return not (self == other)
 
     def __iter__(self):
-        return (self[i] for i in xrange(len(self)))
+        return (self[i] for i in range(len(self)))
 
     def __getitem__(self, millisecond):
         if isinstance(millisecond, slice):
@@ -135,7 +135,7 @@ class AudioSegment(object):
         """
         # accept lists of data chunks
         if isinstance(data, list):
-            data = ''.join(data)
+            data = b''.join(data)
 
         # accept file-like objects
         if hasattr(data, 'read'):
