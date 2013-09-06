@@ -84,7 +84,7 @@ class AudioSegment(object):
 
         # ensure the output is as long as the requester is expecting
         expected_length = end - start
-        missing_frames = (expected_length - len(data)) / self.frame_width
+        missing_frames = (expected_length - len(data)) // self.frame_width
         if missing_frames:
             if missing_frames > self.frame_count(ms=2):
                 raise TooManyMissingFrames("You should never be filling in "\
