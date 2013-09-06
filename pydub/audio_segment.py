@@ -457,13 +457,14 @@ class AudioSegment(object):
 
         frames = self.frame_count()
 
-        start = min(len(self), start)
-        end = min(len(self), end)
-
-        if start is not None and start < 0:
-            start += len(self)
-        if end is not None and end < 0:
-            end += len(self)
+        if start is not None:
+            start = min(len(self), start)
+            if start < 0:
+                start += len(self)
+        if end is not None:
+            end = min(len(self), end)
+            if end < 0:
+                end += len(self)
 
         if duration is not None and duration < 0:
             raise InvalidDuration("duration must be a positive integer")
