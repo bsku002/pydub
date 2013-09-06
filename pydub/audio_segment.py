@@ -254,7 +254,7 @@ class AudioSegment(object):
         wave_data.setnchannels(self.channels)
         wave_data.setsampwidth(self.sample_width)
         wave_data.setframerate(self.frame_rate)
-        wave_data.setnframes(self.frame_count())
+        wave_data.setnframes(int(self.frame_count()))
         wave_data.writeframesraw(self._data)
         wave_data.close()
 
