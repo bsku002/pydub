@@ -334,7 +334,7 @@ class AudioSegment(object):
             frame_width = self.frame_width * 2
         elif channels == 1 and self.channels == 2:
             fn = 'tomono'
-            frame_width = self.frame_width / 2
+            frame_width = self.frame_width // 2
 
         fn = getattr(audioop, fn)
         converted = fn(self._data, self.sample_width, 1, 1)
